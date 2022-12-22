@@ -290,15 +290,17 @@
 			<?php
             try {
 	            // подключаемся к серверу
-            	$conn = new PDO("mysql:host=localhost;dbname=appName;charset=utf8", "root", "");
+            	$conn = new PDO("mysql:host=localhost;dbname=landingPage;charset=utf8", "root", "");
 
-	            $table_reviews = $conn->query("SELECT * FROM reviews");
+				$query = "SELECT users.name, reviews.review, reviews.date FROM users INNER JOIN reviews ON users.id = reviews.id;";
 
-	            foreach ($table_reviews as $row) {
+	            $result = $conn->query($query);
+
+	            foreach ($result as $row) {
 		            echo ('<div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center mt-5"><figure><blockquote class="blockquote">
 							<p><i class="fas fa-quote-left text-muted"></i>');
 
-		            echo ($row["text"]);
+		            echo ($row["review"]);
 
 		            echo ('<i class="fas fa-quote-right text-muted"></i></p>
 					</blockquote>
@@ -306,7 +308,7 @@
 
 		            $var_date = new DateTimeImmutable($row['date']);
 
-		            echo ($row["Author"] . ' (' . $var_date->format('F d Y H:i') . ')');
+		            echo ($row["name"] . ' (' . $var_date->format('F d Y H:i') . ')');
 		            echo ('</div>');
 	            }
 
@@ -366,20 +368,20 @@
 	        $email = $_POST['email'];
 
 	        try {
-		        // подключаемся к серверу
-        		$conn = new PDO("mysql:host=localhost;dbname=appName;charset=utf8", "root", "");
 
-		        $table_reviews = $conn->query("SELECT * FROM reviews");
+		        $users_data = $conn->query("SELECT name, email FROM users");
+				
 		        $data = array('name' => $name, 'email' => $email);
-		        $query = $conn->prepare("INSERT INTO Data (Name, Email) values (:name, :email)");
+
+		        $query = $conn->prepare("INSERT INTO users (name, email) values (:name, :email)");
 				$query->execute($data);
 
+				header('location:?');
 	        } catch (PDOException $e) {
 		        echo ("
 				<script>
 					alert('Connection failed:'" . $e->getMessage() .
-					'</script>'
-
+				'</script>'
 				);
 	        }
         }
