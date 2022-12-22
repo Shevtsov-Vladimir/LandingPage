@@ -155,7 +155,7 @@
 
 	<section class="container text-center" id="features">
 		<h2 class="display-5 mt-5">Features</h2>
-		<div class="row gy-4">
+		<div class="row gy-5">
 			<div class="col-lg-3 col-md-6 col-sm-12">
 				<i class="fas fa-paint-brush fa-2x mb-5 text-info"></i>
 				<h5>Future heading</h5>
@@ -292,7 +292,7 @@
 	            // подключаемся к серверу
             	$conn = new PDO("mysql:host=localhost;dbname=landingPage;charset=utf8", "root", "");
 
-				$query = "SELECT users.name, reviews.review, reviews.date FROM users INNER JOIN reviews ON users.id = reviews.id;";
+	            $query = "SELECT users.name, reviews.review, reviews.date FROM users INNER JOIN reviews ON users.id = reviews.id;";
 
 	            $result = $conn->query($query);
 
@@ -324,15 +324,13 @@
 			<h2 class="display-5 text-center pt-5">Newsletter</h2>
 			<p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 			<div class="row">
-				<div class="col-12 col-md-6">
+				<div class="col-sm-12 col-md-6">
 					<div class="mb-3">
-						<div class="form-check">
-							<input type="text" class="form-control" id="exampleFormControlInput1"
-								placeholder="Firstname Lastname" name="name">
-						</div>
+						<input type="text" class="form-control" id="exampleFormControlInput1"
+							placeholder="Firstname Lastname" name="name">
 					</div>
 				</div>
-				<div class="col-12 col-md-6">
+				<div class="col-sm-12 col-md-6">
 					<div class="mb-3">
 						<input type="email" class="form-control" id="exampleFormControlInput1"
 							placeholder="mail@example.com" name="email">
@@ -344,7 +342,8 @@
 				<div class="col-12">
 
 					<form action="register.php" method="POST">
-						<input class="form-check-input" type="checkbox" name="check" value="checked" id="flexCheckDefault">
+						<input class="form-check-input" type="checkbox" name="check" value="checked"
+							id="flexCheckDefault">
 						<label class="form-check-label text-light" for="flexCheckDefault">
 							I have read and accept the <a href="#" class="stretched-link">terms and
 								conditions</a>.
@@ -360,9 +359,11 @@
 		</form>
 
 		<?php
-        if (isset($_POST['name']) && isset($_POST['email'])
-			&& isset($_POST['check']) && 
-			$_POST['check'] == 'checked') {
+        if (
+        	isset($_POST['name']) && isset($_POST['email'])
+        	&& isset($_POST['check']) &&
+        	$_POST['check'] == 'checked'
+        ) {
 	        // Переменные с формы
         	$name = $_POST['name'];
 	        $email = $_POST['email'];
@@ -370,19 +371,19 @@
 	        try {
 
 		        $users_data = $conn->query("SELECT name, email FROM users");
-				
+
 		        $data = array('name' => $name, 'email' => $email);
 
 		        $query = $conn->prepare("INSERT INTO users (name, email) values (:name, :email)");
-				$query->execute($data);
+		        $query->execute($data);
 
-				header('location:?');
+		        header('location:?');
 	        } catch (PDOException $e) {
 		        echo ("
 				<script>
 					alert('Connection failed:'" . $e->getMessage() .
-				'</script>'
-				);
+		        	'</script>'
+		        );
 	        }
         }
         ?>
@@ -390,9 +391,9 @@
 	</section>
 
 	<footer class="container my-5">
-		<div class="row">
+		<div class="row gy-3">
 			<div class="col-12 col-md-6 col-lg-3 d-flex flex-column">
-				<h6 class="fw-bold">Quick links</h6>
+				<p class="mb-1">Quick links</p>
 				<a href="#">Home</a>
 				<a href="#">What's new?</a>
 				<a href="#">Support</a>
@@ -400,7 +401,7 @@
 				<a href="#">Cancel subscription</a>
 			</div>
 			<div class="col-12 col-md-6 col-lg-3 d-flex flex-column">
-				<h6 class="fw-bold">Information</h6>
+				<p class="mb-1">Information</p>
 				<a href="#">About us</a>
 				<a href="#">Jobs</a>
 				<a href="#">Press info</a>
@@ -408,7 +409,7 @@
 				<a href="#">Partnership</a>
 			</div>
 			<div class="col-12 col-md-6 col-lg-3 d-flex flex-column">
-				<h6 class="fw-bold">Follow us</h6>
+				<p class="mb-1">Follow us</p>
 				<a href="#">
 					<i class="fab fa-facebook"></i>
 					Facebook
@@ -431,7 +432,7 @@
 				</a>
 			</div>
 			<div class="col-12 col-md-6 col-lg-3 d-flex flex-column">
-				<h6 class="fw-bold">Our location</h6>
+				<p class="mb-1">Our location</p>
 				<h6 class="fw-bold">App Name</h6>
 				<p>350 5th Avenue<br>New Your, NY 10118
 					<br><i class="fas fa-phone"></i><a href="#"> (212) 736-3100</a>
